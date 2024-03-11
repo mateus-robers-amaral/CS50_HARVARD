@@ -14,37 +14,28 @@ months = [
 ]
 
 while True:
+    date = input("Date: ").strip()
     try:
-        i = input("Date: ")
-        f = i.split(" ", 1)
+        month, day, year  = date.split("/")
+        if (int(month) >= 1 and int(month) <= 12) and (int(day) >= 1 and int(day) <= 31):
+            break
 
-        if f[0].isdigit():
-            d, ma = f
-            m, a = ma.split(',')
-            if m.strip() in months:
-                month = months.index(m.strip()) + 1
-                print(a.strip(), month, d.strip(), sep="-")
-            else:
-                raise ValueError
+    except:
+        try:
+            old_month, old_day, year = date.split(" ")
+            for i in range(len(months)):
+                if old_month == months[i]:
+                    month = i + 1
 
-        elif " " in i and "," in i:
-            ma, d = f
-            m, a = ma.split(',')
-            if m.strip() in months:
-                month = months.index(m.strip()) + 1
-                print(a.strip(), month, d.strip(), sep="-")
-            else:
-                raise ValueError
-
-        else:
-            m, d, a = map(int, i.split("/"))
-            if 1 <= m <= 12 and 1 <= d <= 31:
-                fm = str(m).zfill(2)
-                fd = str(d).zfill(2)
-                print(f"{a}-{fm}-{fd}")
-            else:
+            day = old_day.replace(",", "")
+            if not old_day.endswith(","):
                 continue
-        break
+            if (int(month) >= 1 and int(month) <= 12) and (int(day) >= 1 and int(day) <= 31):
+                break
 
-    except ValueError:
-        print("Value Error")
+        except:
+            print()
+            pass
+
+print(f"{year}-{int(month):02}-{int(day):02}")
+
